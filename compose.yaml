@@ -1,0 +1,24 @@
+services:
+  app:
+    image: todo-app-image
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 127.0.0.1:3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      PGHOST: postgresql
+      PGDATABASE: todos
+      PGUSER: postgres
+
+  postgresql:
+    image: postgres
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: todos
+
+volumes:
+  postgres-db:
